@@ -19,6 +19,7 @@ public:
 	double getspeed();
 	position pos;	// X,Y coords of object
 	//void addshape(Shape *s);
+	
 	void setcolour(double r, double g, double b);
 	void setrotation(double r);
 	void setspeed(double s);

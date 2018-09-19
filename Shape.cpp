@@ -44,6 +44,7 @@ void Shape::setposY(double y) {
 }
 void Shape::glMove() {
 	glTranslated(pos.getx(), pos.gety(),0);
+	glRotated(rotation, 0, 0, 1);
 }
 /*
 void Shape::addshape(Shape *s) {
