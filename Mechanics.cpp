@@ -8,7 +8,36 @@ bool Mechanics::Collision(Shape *s, Shape *p) {
 	else {
 		// Perform rectangular hitbox detections?
 	}
-}*/
+}
+void Mechanics::addshape(Rocket * s) {
+	Players.push_back(s);
+}
+
+void Mechanics::addshape(blob * t) {
+	Asteroids
+}
+*/
+void Mechanics::PlayerControls(Rocket * Player) {
+	XInputGetState(0, Player->Player->GetState());
+	Player->Player->SetDeadzone(5000);
+	GamePad::Coordinate * LThumb;
+	GamePad::Coordinate * RThumb;
+	LThumb = &Player->Player->LeftThumbLocation();
+	RThumb = &Player->Player->RightThumbLocation();
+
+	Player->accel.setx(scalestickX(LThumb));
+	Player->accel.sety(scalestickY(LThumb));
+	Player->shuffleRotation(-scalestickX(RThumb));
+
+}
+double Mechanics::scalestickX(GamePad::Coordinate * ptr) {
+	return (ptr->GetX() / 5000.0);
+
+}
+double Mechanics::scalestickY(GamePad::Coordinate * ptr) {
+	return (ptr->GetY() / 5000.0);
+}
+
 double Mechanics::time() {
 
 	

@@ -11,6 +11,7 @@ blob::blob(double m, double r) {
 	
 
 }
+/*
 blob::blob() {
 	mass = 1;
 	radius = 0.1;
@@ -18,7 +19,7 @@ blob::blob() {
 	rgb[1] = 1;
 	rgb[2] = 0;
 
-}
+}*/
 double blob::getmass() {
 	return mass;
 }

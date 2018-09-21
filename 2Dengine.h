@@ -17,10 +17,10 @@ public:
 	void shuffleY(double y);
 
 	void add(position v);
-	void subtract(position v);
+	static position subtract(position a, position b);
 	void scale(double n);
-	
-	double mag(position v);
+	void normalise();
+	double mag();
 	
 	
 };

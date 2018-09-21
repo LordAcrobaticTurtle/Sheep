@@ -10,10 +10,14 @@
 #include <Xinput.h>
 #include "Lazor.h"
 class Rocket : public Shape {
+private:
+	XInputWrapper ptr;
 protected:
 	int health;
+	int PlayedID;
 public:
 	Rocket();
 	Rocket(int hp);
 	void draw();
+	GamePad::XBoxController * Player;
 };

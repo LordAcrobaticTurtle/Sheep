@@ -22,15 +22,14 @@ public:
 	position pos;	// X,Y coords of object
 	position vel;	// velocity of object in x and y terms
 	position accel; // Accleration in x y terms
-	//void addshape(Shape *s);
+	double clamp(double a, double b, double c);
 	bool getAlive();
-
 	void setAlive(int m);
+
 	void setcolour(double r, double g, double b);
 	void setrotation(double r);
 	void setspeed(double s);
-	void setposX(double x);
-	void setposY(double y);
+
 	void shuffleRotation(double r);
 	virtual void update(double speed, double dt);
 	virtual void update(double dt);

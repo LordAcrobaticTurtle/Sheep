@@ -37,15 +37,22 @@ void position::add(position v) {
 	y += v.y;
 }
 
-void position::subtract(position v) {
-	x -= v.x;
-	y -= v.y;
+position position::subtract(position a, position b) {
+	position vector;
+	vector.setx(a.x - b.x);
+	vector.sety(a.y - b.y);
+	return vector;
 }
+
 void position::scale(double n) {
 	x = x * n;
 	y = x * n;
 }
 
-double position::mag(position v) {
-	return sqrt((x - v.x)*(x - v.x) + (y - v.y)*(y - v.y));
+double position::mag() {
+	return sqrt((x)*(x) + (y)*(y));
+}
+void position::normalise() {
+	x = x / mag();
+	y = y / mag();
 }

@@ -12,7 +12,7 @@ protected:
 	double radius;
 	double hitbox;
 public:
-	blob();
+	blob() = default;
 	blob(double m, double r);
 	void draw();
 	double getmass();
