@@ -10,7 +10,7 @@ class blob : public Shape {
 protected:
 	double mass;
 	double radius;
-
+	double hitbox;
 public:
 	blob();
 	blob(double m, double r);

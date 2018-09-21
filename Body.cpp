@@ -8,6 +8,7 @@ blob::blob(double m, double r) {
 	rgb[2] = 0;
 	//pos.setx(0);
 	//pos.sety(0);
+	
 
 }
 blob::blob() {
