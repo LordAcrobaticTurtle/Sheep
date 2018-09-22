@@ -15,6 +15,7 @@ public:
 	blob() = default;
 	blob(double m, double r);
 	void draw();
+	void update(double dt);
 	double getmass();
 	double getradius();
 	void setradius(double num);

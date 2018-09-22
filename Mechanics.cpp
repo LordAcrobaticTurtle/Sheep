@@ -24,11 +24,26 @@ void Mechanics::PlayerControls(Rocket * Player) {
 	GamePad::Coordinate * RThumb;
 	LThumb = &Player->Player->LeftThumbLocation();
 	RThumb = &Player->Player->RightThumbLocation();
-
+	if (Player->Player->PressedY()) {
+		getchar();
+	}
 	Player->accel.setx(scalestickX(LThumb));
 	Player->accel.sety(scalestickY(LThumb));
 	Player->shuffleRotation(-scalestickX(RThumb));
 
+}
+void Mechanics::AsteroidGrav(blob* Test2, blob* Test3) {
+	position distance;
+	distance.sety(Test2->pos.gety() - Test3->pos.gety());
+	distance.setx(Test2->pos.getx() - Test3->pos.getx());
+	double magnitude = 0;
+	magnitude = (Test2->getmass()*Test3->getmass()) / (distance.mag()*distance.mag());
+	position force;
+	double g = 1 / Test3->getmass();
+	force.scale(g);
+	force.setx(magnitude*distance.getx());
+	force.sety(magnitude*distance.gety());
+	Test3->accel.add(force);
 }
 double Mechanics::scalestickX(GamePad::Coordinate * ptr) {
 	return (ptr->GetX() / 5000.0);
@@ -40,24 +55,7 @@ double Mechanics::scalestickY(GamePad::Coordinate * ptr) {
 
 double Mechanics::time() {
 
-	
-	
-#if defined(WIN32)
-		LARGE_INTEGER freqli;
-		LARGE_INTEGER li;
-		if (QueryPerformanceCounter(&li) && QueryPerformanceFrequency(&freqli)) {
-			return double(li.QuadPart) / double(freqli.QuadPart);
-		}
-		else {
-			static ULONGLONG start = GetTickCount64();
-			return (GetTickCount64() - start) / 1000.0;
-		}
-#else
-		struct timeval t;
-		gettimeofday(&t, NULL);
-		return t.tv_sec + (t.tv_usec / 1000000.0);
-#endif
 
-		
+	return 0;
 }
 

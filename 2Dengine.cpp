@@ -9,7 +9,10 @@ position::position() {
 	x = 0;
 	y = 0;
 }
-
+position::position(double x_, double y_) {
+	this->x = x_;
+	this->y = y_;
+}
 double position::getx() {
 	return x;
 }
@@ -39,8 +42,8 @@ void position::add(position v) {
 
 position position::subtract(position a, position b) {
 	position vector;
-	vector.setx(a.x - b.x);
-	vector.sety(a.y - b.y);
+	vector.setx(a.getx() - b.getx());
+	vector.sety(a.gety() - b.gety());
 	return vector;
 }
 

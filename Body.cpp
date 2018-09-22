@@ -32,10 +32,22 @@ void blob::setradius(double num) {
 void blob::setmass(double fat) {
 	this->mass = fat;
 }
+void blob::update(double dt) {
+	vel.shuffleX(accel.getx()*dt);
+	vel.shuffleY(accel.gety()*dt);
+
+	vel.setx(clamp(-1, vel.getx(), 1));
+	vel.sety(clamp(-1, vel.gety(), 1));
+
+	pos.shuffleX(vel.getx()*dt);
+	pos.shuffleY(vel.gety()*dt);
+
+	accel.scale(0);
+}
 void blob::draw() {
 	glPushMatrix();
 	glMove();
-	glColor3d(1,1,1);
+	glColor3d(rgb[0],rgb[1],rgb[2]);
 	gluDisk(gluNewQuadric(), 0, radius, 50, 20);
 	glPopMatrix();
 }

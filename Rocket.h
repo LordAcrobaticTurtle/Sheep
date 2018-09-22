@@ -18,6 +18,7 @@ protected:
 public:
 	Rocket();
 	Rocket(int hp);
+	void update(double dt);
 	void draw();
 	GamePad::XBoxController * Player;
 };

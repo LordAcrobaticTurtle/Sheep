@@ -13,12 +13,10 @@ public:
 	double time();
 	Rocket * Players[4];
 	blob * Asteroids[10];
-	// GRAVITY
+	void AsteroidGrav(blob* Test2, blob* Test3);
 	void PlayerControls(Rocket * ship);
 	double scalestickX(GamePad::Coordinate * ptr);
 	double scalestickY(GamePad::Coordinate * ptr);
 	
-	void addshape(Rocket * s);
-	void addshape(blob * t);
 	// LAZERS AND COLLISIONS
 };

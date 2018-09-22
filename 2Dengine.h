@@ -7,6 +7,7 @@ protected:
 	
 public:
 	position();
+	position(double x_, double y_);
 	double getx();
 	double gety();
 
