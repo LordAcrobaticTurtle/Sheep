@@ -21,18 +21,18 @@ double position::gety() {
 	return y;
 }
 
-void position::setx(double x) {
-	this->x = x;
+void position::setx(double x_) {
+	x = x_;
 }
-void position::sety(double y) {
-	this->y = y;
+void position::sety(double y_) {
+	y = y_;
 }
 
-void position::shuffleX(double x) {
-	this->x += x;
+void position::shuffleX(double x_) {
+	x += x_;
 }
-void position::shuffleY(double y) {
-	this->y += y;
+void position::shuffleY(double y_) {
+	y += y_;
 }
 
 void position::add(position v) {
@@ -40,10 +40,10 @@ void position::add(position v) {
 	y += v.y;
 }
 
-position position::subtract(position a, position b) {
+position position::subtract(position * a, position * b) {
 	position vector;
-	vector.setx(a.getx() - b.getx());
-	vector.sety(a.gety() - b.gety());
+	vector.setx(a->getx() - b->getx());
+	vector.sety(a->gety() - b->gety());
 	return vector;
 }
 
@@ -58,4 +58,10 @@ double position::mag() {
 void position::normalise() {
 	x = x / mag();
 	y = y / mag();
+}
+double position::angle() {
+	return atan2(y,x);
+}
+double position::dot(position * a, position * b) {
+	return a->x*b->x + a->y*b->y;
 }

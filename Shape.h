@@ -16,12 +16,11 @@ protected:
 public:
 	Shape();
 	~Shape();
-
 	double getrotation();
 	double getspeed();
-	position pos;	// X,Y coords of object
-	position vel;	// velocity of object in x and y terms
-	position accel; // Accleration in x y terms
+	position *pos;	// X,Y coords of object
+	position *vel;	// velocity of object in x and y terms
+	position *accel; // Accleration in x y terms
 	double clamp(double a, double b, double c);
 	bool getAlive();
 	void setAlive(int m);

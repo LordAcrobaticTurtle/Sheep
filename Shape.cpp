@@ -3,10 +3,14 @@
 
 
 Shape::Shape() {
-//	pos.setx(0);
-//	pos.sety(0);
+	
+	pos = new position(0, 0);
+	vel = new position(0, 0);
+	accel = new position(0, 0);
 	speed = 0;
 	rotation = 0;
+	
+
 }
 Shape::~Shape() {
 	// Create loop that deletes items from vector list
@@ -56,8 +60,8 @@ void Shape::update(double speed, double dt) {
 	double dy = 0;
 	dx = speed * cos(-rotation * 3.1415926535 /180) * dt;
 	dy = speed * sin(rotation * 3.1415926535 / 180) * dt;
-	pos.shuffleX(dx);
-	pos.shuffleY(dy);
+	pos->shuffleX(dx);
+	pos->shuffleY(dy);
 
 }
 double Shape::clamp(double a, double b, double c) {
@@ -82,19 +86,19 @@ double Shape::clamp(double a, double b, double c) {
 
 }
 void Shape::update(double dt) {
-	vel.shuffleX(accel.getx()*dt);
-	vel.shuffleY(accel.gety()*dt);
+	vel->shuffleX(accel->getx()*dt);
+	vel->shuffleY(accel->gety()*dt);
 
 //	vel.setx(clamp(-0.5, vel.getx(), 0.5));
 	//vel.sety(clamp(-0.5, vel.gety(), 0.5));
 	
-	pos.shuffleX(vel.getx()*dt);
-	pos.shuffleY(vel.gety()*dt);
+	pos->shuffleX(vel->getx()*dt);
+	pos->shuffleY(vel->gety()*dt);
 	
-	accel.scale(0);
+	accel->scale(0);
 }
 void Shape::glMove() {
-	glTranslated(pos.getx(), pos.gety(),0);
+	glTranslated(pos->getx(), pos->gety(),0);
 	glRotated(rotation, 0, 0, 1);
 }
 /*

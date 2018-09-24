@@ -6,9 +6,6 @@ blob::blob(double m, double r) {
 	rgb[0] = 0;
 	rgb[1] = 1;
 	rgb[2] = 0;
-	//pos.setx(0);
-	//pos.sety(0);
-	
 
 }
 /*
@@ -33,21 +30,21 @@ void blob::setmass(double fat) {
 	this->mass = fat;
 }
 void blob::update(double dt) {
-	vel.shuffleX(accel.getx()*dt);
-	vel.shuffleY(accel.gety()*dt);
+	vel->shuffleX(accel->getx()*dt);
+	vel->shuffleY(accel->gety()*dt);
 
-	vel.setx(clamp(-1, vel.getx(), 1));
-	vel.sety(clamp(-1, vel.gety(), 1));
+	vel->setx(clamp(-1/mass*mass, vel->getx(), 1/mass*mass));
+	vel->sety(clamp(-1/mass*mass, vel->gety(), 1/mass*mass));
 
-	pos.shuffleX(vel.getx()*dt);
-	pos.shuffleY(vel.gety()*dt);
+	pos->shuffleX(vel->getx()*dt);
+	pos->shuffleY(vel->gety()*dt);
 
-	accel.scale(0);
+	accel->scale(0);
 }
 void blob::draw() {
 	glPushMatrix();
 	glMove();
 	glColor3d(rgb[0],rgb[1],rgb[2]);
-	gluDisk(gluNewQuadric(), 0, radius, 50, 20);
+	gluDisk(gluNewQuadric(), 0, radius, 20, 10);
 	glPopMatrix();
 }

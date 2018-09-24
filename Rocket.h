@@ -9,6 +9,7 @@
 #include "XInputWrapper.h"
 #include <Xinput.h>
 #include "Lazor.h"
+
 class Rocket : public Shape {
 private:
 	XInputWrapper ptr;
@@ -16,6 +17,8 @@ protected:
 	int health;
 	int PlayedID;
 public:
+	lazor * pew;
+	double radius;
 	Rocket();
 	Rocket(int hp);
 	void update(double dt);
