@@ -13,13 +13,14 @@ public:
 	bool Collision(blob * s, lazor * p);
 	double time();
 	//void bounce(blob * body1, blob * body2);
-	//void bounce(Rocket * body);	
+	void bounce(Rocket * body);	
 	void nom(blob * b1, blob * b2);
 	void AsteroidGrav(blob* Test2, blob* Test3);
 	void Destroy(blob * b);
 	void PlayerControls(Rocket * ship);
 	double scalestickX(GamePad::Coordinate * ptr);
 	double scalestickY(GamePad::Coordinate * ptr);
+	double scalerotation(GamePad::Coordinate * ptr);
 	
-	// LAZERS AND COLLISIONS
+	
 };

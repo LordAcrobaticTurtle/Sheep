@@ -12,8 +12,8 @@ lazor::lazor() {
 void lazor::update(double dt) {
 	//vel->setx(cos(rotation));
 	//vel->sety(sin(rotation));
-	pos->shuffleX(2*vel->getx()*dt);
-	pos->shuffleY(2*vel->gety()*dt);
+	pos->shuffleX(maxV*vel->getx()*dt);
+	pos->shuffleY(maxV*vel->gety()*dt);
 }
 
 void lazor::draw() {

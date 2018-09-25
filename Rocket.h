@@ -23,5 +23,7 @@ public:
 	Rocket(int hp);
 	void update(double dt);
 	void draw();
+	double getHealth();
+	void setHeatlh(double hp);
 	GamePad::XBoxController * Player;
 };

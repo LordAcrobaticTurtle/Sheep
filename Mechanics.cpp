@@ -30,7 +30,7 @@ void Mechanics::PlayerControls(Rocket * ctrl) {
 	}
 	ctrl->accel->setx(scalestickX(LThumb));
 	ctrl->accel->sety(scalestickY(LThumb));
-	ctrl->shuffleRotation(-scalestickX(RThumb));
+	ctrl->shuffleRotation(-scalerotation(RThumb));
 	if (ctrl->Player->PressedLeftShoulder()) {
 		ctrl->pew->shoot = 1;
 	} 
@@ -41,12 +41,13 @@ void Mechanics::PlayerControls(Rocket * ctrl) {
 	}
 
 }
+
 void Mechanics::AsteroidGrav(blob* Test2, blob* Test3) {
 	position distance;
 	distance.sety(Test2->pos->gety() - Test3->pos->gety());
 	distance.setx(Test2->pos->getx() - Test3->pos->getx());
 	double magnitude = 0;
-	magnitude = (Test2->getmass()*Test3->getmass()) / (distance.mag()*distance.mag());
+	magnitude = 2*(Test2->getmass()*Test3->getmass()) / (distance.mag()*distance.mag());
 	position force;
 	force.scale(1 / Test3->getmass());
 	force.setx(magnitude*distance.getx());
@@ -61,15 +62,25 @@ double Mechanics::scalestickX(GamePad::Coordinate * ptr) {
 	return (ptr->GetX() / 5000.0);
 
 }
+
 double Mechanics::scalestickY(GamePad::Coordinate * ptr) {
 	return (ptr->GetY() / 5000.0);
 }
+
+double Mechanics::scalerotation(GamePad::Coordinate * ptr) {
+	return (ptr->GetX() / 10000.0);
+}
+
 bool Mechanics::Collision(Rocket * player, blob * p) {
 	position distance = position::subtract(player->pos, p->pos);
 	if (distance.mag() - player->radius - p->getradius() < 0) {
 		return true;
 	}
 	return false;
+}
+
+void Mechanics::bounce(Rocket * p) {
+	p->vel->scale(-1);
 }
 bool Mechanics::Collision(blob * body1, blob * body2) {
 	position distance = position::subtract(body1->pos, body2->pos);
@@ -79,30 +90,36 @@ bool Mechanics::Collision(blob * body1, blob * body2) {
 	}
 	return false;
 }
+
 bool Mechanics::Collision(blob * body, lazor * pew) {
 	position distance = position::subtract(body->pos, pew->pos);
-
-	if (distance.mag() - body->getradius() - 0.01 < 0) {
-		return true;
+	if (pew->shoot == 1) {
+		if (distance.mag() - body->getradius() - 0.01 < 0) {
+			pew->shoot = 0;
+			return true;
+		}
 	}
+	return false;
 }
+
 void Mechanics::Destroy(blob * body) {
-	body->setmass(body->getmass());
-	body->setradius(body->getradius());
-	printf("Hit!");
+	body->setmass(0.6*body->getmass());
+	body->setradius(0.6*body->getradius());
+	
 }
+
 void Mechanics::nom(blob * b1, blob * b2) {
 	if (b1->getmass() >= b2->getmass()) {
 		b1->setmass(b1->getmass() + 0.01);
 		b1->setradius((b1->getradius() + 0.01));
-		b2->pos->setx(rand()% 100);
-		b2->pos->sety(rand()%100);
+		b2->pos->setx(rand());
+		b2->pos->sety(rand());
 	}
 	else if (b2->getmass() > b1->getmass()) {
 		b2->setmass(b2->getmass() + 0.01);
 		b2->setradius(b2->getradius() + 0.01);
-		b1->pos->setx(rand()%100);
-		b1->pos->sety(rand()%100);
+		b1->pos->setx(rand());
+		b1->pos->sety(rand());
 	}
 }
 

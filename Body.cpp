@@ -33,8 +33,8 @@ void blob::update(double dt) {
 	vel->shuffleX(accel->getx()*dt);
 	vel->shuffleY(accel->gety()*dt);
 
-	vel->setx(clamp(-1/mass*mass, vel->getx(), 1/mass*mass));
-	vel->sety(clamp(-1/mass*mass, vel->gety(), 1/mass*mass));
+	vel->setx(clamp(-0.5/(mass)*0.1, vel->getx(), 0.5/(mass)*0.1));
+	vel->sety(clamp(-0.5/(mass)*0.1, vel->gety(), 0.5/(mass)*0.1));
 
 	pos->shuffleX(vel->getx()*dt);
 	pos->shuffleY(vel->gety()*dt);

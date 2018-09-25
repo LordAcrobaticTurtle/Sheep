@@ -19,8 +19,8 @@ void Rocket::update(double dt) {
 	vel->shuffleX(accel->getx()*dt);
 	vel->shuffleY(accel->gety()*dt);
 
-	vel->setx(clamp(-2.5, vel->getx(), 2.5));
-	vel->sety(clamp(-2.5, vel->gety(), 2.5));
+	vel->setx(clamp(-2, vel->getx(), 2));
+	vel->sety(clamp(-2, vel->gety(), 2));
 
 	pos->shuffleX(vel->getx()*dt);
 	pos->shuffleY(vel->gety()*dt);
@@ -31,6 +31,12 @@ void Rocket::update(double dt) {
 	}
 
 	accel->scale(0);
+}
+double Rocket::getHealth() {
+	return health;
+}
+void Rocket::setHeatlh(double hp) {
+	health = hp;
 }
 void Rocket::draw() {
 	glPushMatrix();
