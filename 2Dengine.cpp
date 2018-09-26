@@ -35,25 +35,28 @@ void position::shuffleY(double y_) {
 	y += y_;
 }
 
-void position::add(position v) {
-	x += v.x;
-	y += v.y;
+void position::add(position * v) {
+	x += v->x;
+	y += v->y;
 }
-
-position position::subtract(position * a, position * b) {
-	position vector;
-	vector.setx(a->getx() - b->getx());
-	vector.sety(a->gety() - b->gety());
+position* position::subtract(position * a, position * b) {
+	position *vector = new position(0,0);
+	vector->setx(a->x - b->x);
+	vector->sety(a->y - b->y);
 	return vector;
 }
 
 void position::scale(double n) {
 	x = x * n;
-	y = x * n;
+	y = y * n;
 }
 
 double position::mag() {
 	return sqrt((x)*(x) + (y)*(y));
+}
+
+double position::mag2() {
+	return (x)*(x)+(y)*(y);
 }
 void position::normalise() {
 	x = x / mag();

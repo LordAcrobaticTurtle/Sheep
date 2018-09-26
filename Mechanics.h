@@ -12,8 +12,12 @@ public:
 	bool Collision(Rocket * player, blob * p);
 	bool Collision(blob * s, lazor * p);
 	double time();
-	//void bounce(blob * body1, blob * body2);
+	
+	blob * Asteroids[10];
+	Rocket * Prockets[4];
+
 	void bounce(Rocket * body);	
+	void bounce(blob * b1, blob * b2);
 	void nom(blob * b1, blob * b2);
 	void AsteroidGrav(blob* Test2, blob* Test3);
 	void Destroy(blob * b);

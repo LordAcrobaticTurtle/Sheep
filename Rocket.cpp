@@ -42,10 +42,26 @@ void Rocket::draw() {
 	glPushMatrix();
 	glColor3d(1, 0, 1);
 	glMove();
+	glBegin(GL_QUADS);
+	glVertex2d(-0.03, 0.03);
+	glVertex2d(-0.03, -0.03);
+	glVertex2d(0.03,-0.03);
+	glVertex2d(0.03, 0.03);
+	glEnd();
+	// NOSECONE
 	glBegin(GL_TRIANGLES);
-	glVertex2d(-0.05, 0.05);
-	glVertex2d(-0.05, -0.05);
-	glVertex2d(0.1,0);
+	glVertex2d(0.03,0.03);
+	glVertex2d(0.03, -0.03);
+	glVertex2d(0.07, 0);
+	
+	//FINS
+	glVertex2d(-0.03, 0.03);
+	glVertex2d(0, 0.03);
+	glVertex2d(-0.035, 0.04);
+
+	glVertex2d(-0.03, -0.03);
+	glVertex2d(0, -0.03);
+	glVertex2d(-0.035, -0.04);
 	glEnd();
 	glPopMatrix();
 	if (pew->shoot == 1) {

@@ -17,11 +17,12 @@ public:
 	void shuffleX(double x);
 	void shuffleY(double y);
 
-	void add(position v);
-	static position subtract(position * a, position * b);
+	void add(position * v);
+	static position* subtract(position * a, position * b);
 	void scale(double n);
 	void normalise();
 	double mag();
+	double mag2();
 	double angle();
 	static double dot(position * a, position * b);
 	
