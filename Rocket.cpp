@@ -11,6 +11,7 @@ Rocket::Rocket(int PID) {
 	pew = new lazor();
 	pew->pos->setx(0);
 	pew->pos->sety(0);
+	health = 3;
 }
 
 
@@ -32,7 +33,7 @@ void Rocket::update(double dt) {
 
 	accel->scale(0);
 }
-double Rocket::getHealth() {
+int Rocket::getHealth() {
 	return health;
 }
 void Rocket::setHeatlh(double hp) {
@@ -40,8 +41,9 @@ void Rocket::setHeatlh(double hp) {
 }
 void Rocket::draw() {
 	glPushMatrix();
-	glColor3d(1, 0, 1);
 	glMove();
+	glPushMatrix();
+	glColor3d(1, 0, 1);
 	glBegin(GL_QUADS);
 	glVertex2d(-0.03, 0.03);
 	glVertex2d(-0.03, -0.03);
@@ -63,6 +65,7 @@ void Rocket::draw() {
 	glVertex2d(0, -0.03);
 	glVertex2d(-0.035, -0.04);
 	glEnd();
+	glPopMatrix();
 	glPopMatrix();
 	if (pew->shoot == 1) {
 		pew->draw();

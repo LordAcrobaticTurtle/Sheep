@@ -31,11 +31,6 @@ void Shape::setAlive(int m) {
 double Shape::getrotation() {
 	return rotation;
 }
-/*
-position Shape::getpos() {
-	return pos;
-}
-*/
 double Shape::getspeed() {
 	return speed;
 }
@@ -87,10 +82,7 @@ double Shape::clamp(double a, double b, double c) {
 }
 void Shape::update(double dt) {
 	vel->shuffleX(accel->getx()*dt);
-	vel->shuffleY(accel->gety()*dt);
-
-//	vel.setx(clamp(-0.5, vel.getx(), 0.5));
-	//vel.sety(clamp(-0.5, vel.gety(), 0.5));
+	vel->shuffleY(accel->gety()*dt);	
 	
 	pos->shuffleX(vel->getx()*dt);
 	pos->shuffleY(vel->gety()*dt);
@@ -101,8 +93,3 @@ void Shape::glMove() {
 	glTranslated(pos->getx(), pos->gety(),0);
 	glRotated(rotation, 0, 0, 1);
 }
-/*
-void Shape::addshape(Shape *s) {
-	image.push_back(s);
-}
-*/

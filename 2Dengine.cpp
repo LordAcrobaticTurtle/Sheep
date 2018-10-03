@@ -39,10 +39,9 @@ void position::add(position * v) {
 	x += v->x;
 	y += v->y;
 }
-position* position::subtract(position * a, position * b) {
-	position *vector = new position(0,0);
-	vector->setx(a->x - b->x);
-	vector->sety(a->y - b->y);
+position * position::subtract(position * a, position * b) {
+	position * vector = new position(a->x - b->x, a->y - b->y);
+
 	return vector;
 }
 

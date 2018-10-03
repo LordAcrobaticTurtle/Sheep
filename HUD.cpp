@@ -1,0 +1,44 @@
+#include "HUD.h"
+#include <string>
+void HUD::PrintHealth(int Health) {
+	glPushMatrix();
+	glColor3d(1, 1, 1);
+	glRasterPos2i(1, 0);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, Health + 48);
+	glPopMatrix();
+}
+void HUD::DeathMessage(int Hp) {
+	if (Hp <= 0) {
+		char Death[] = "You died";
+		double x = 1;
+		glPushMatrix();
+		for (int i = 0; i < strlen(Death); i++) {
+			glRasterPos2d(x, -0.5);
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, Death[i]);
+			x += glutBitmapWidth(GLUT_BITMAP_TIMES_ROMAN_24, Death[i]);
+
+		}
+		glPopMatrix();
+		//getchar();
+	}
+}
+
+void HUD::PrintScore(int num) {
+	int tens = 0;
+	int ones = 0;
+	
+	tens = num / 10;
+	ones = num % 10;
+	
+	glPushMatrix();
+	glColor3d(1, 1, 1);
+	glRasterPos2d(-0.5,-1);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, tens + 48);
+	glPopMatrix();
+
+	glPushMatrix();
+	glColor3d(1, 1, 1);
+	glRasterPos2d(-0.45,-1);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ones + 48);
+	glPopMatrix();
+}
