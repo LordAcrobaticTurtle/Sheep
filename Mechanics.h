@@ -8,26 +8,26 @@
 #include "Body.h"
 class Mechanics {
 private:
-	int score;
+	//int score;
 public:
 	Mechanics();
-	bool Collision(blob *s, blob *p);
-	bool Collision(Rocket * player, blob * p);
-	bool Collision(blob * s, lazor * p);
-	double time();
-	int getscore();
-	void shufflescore(int num);
-	blob * Asteroids[10];
-	Rocket * Prockets[4];
-	void bounce(Rocket * body);	
-	void bounce(blob * b1, blob * b2);
-	void nom(blob * b1, blob * b2);
-	void AsteroidGrav(blob* Test2, blob* Test3);
-	void Destroy(blob * b);
-	void PlayerControls(Rocket * ship);
-	double scalestickX(GamePad::Coordinate * ptr);
-	double scalestickY(GamePad::Coordinate * ptr);
-	double scalerotation(GamePad::Coordinate * ptr);
+	static bool Collision(blob *s, blob *p);
+	static bool Collision(Rocket * player, blob * p);
+	static bool Collision(blob * s, lazor * p);
+	static double time();
+	//static int getscore();
+	//static void shufflescore(int num);
+	static void borderPatrol(blob * Test);
+	static void borderPatrol(Rocket * Test);
+	static void bounce(Rocket * body);	
+	static void bounce(blob * b1, blob * b2);
+	static void nom(blob * b1, blob * b2);
+	static void AsteroidGrav(blob* Test2, blob* Test3);
+	static void Destroy(blob * b);
+	static void PlayerControls(Rocket * ship);
+	static double scalestickX(GamePad::Coordinate * ptr);
+	static double scalestickY(GamePad::Coordinate * ptr);
+	static double scalerotation(GamePad::Coordinate * ptr);
 	
 	
 };

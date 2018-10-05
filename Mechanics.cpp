@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 Mechanics::Mechanics() {
-	score = 0;
+//	score = 0;
 }
 void Mechanics::PlayerControls(Rocket * ctrl) {
 	XInputGetState(0, ctrl->Player->GetState());
@@ -35,19 +35,18 @@ void Mechanics::AsteroidGrav(blob* Test2, blob* Test3) {
 	position *force = new position(distance->getx(),distance->gety());
 	force->scale(magnitude / Test2->getmass());
 	Test2->accel->add(force);
-	force->scale(-1 * Test2->getmass() / Test3->getmass());
-	Test3->accel->add(force);
+	
 	delete force;
 	delete distance;
 	
 }
 double Mechanics::scalestickX(GamePad::Coordinate * ptr) {
-	return (ptr->GetX() / 10000.0);
+	return (ptr->GetX() / 15000.0);
 
 }
 
 double Mechanics::scalestickY(GamePad::Coordinate * ptr) {
-	return (ptr->GetY() / 10000.0);
+	return (ptr->GetY() / 15000.0);
 }
 
 double Mechanics::scalerotation(GamePad::Coordinate * ptr) {
@@ -91,8 +90,8 @@ bool Mechanics::Collision(blob * body, lazor * pew) {
 
 }
 void Mechanics::Destroy(blob * body) {
-	body->setmass(body->clamp(0.02,0.7*body->getmass(),1));
-	body->setradius((body->clamp(0.008, 0.7*body->getradius(), 0.4)));
+	body->setmass(body->clamp(0.02,body->getmass()-0.02,1));
+	body->setradius((body->clamp(0.008, body->getradius()-0.02, 0.4)));
 }
 void Mechanics::bounce(blob * b1, blob * b2) {
 	position * centre = position::subtract(b2->pos, b1->pos);
@@ -107,17 +106,17 @@ void Mechanics::bounce(blob * b1, blob * b2) {
 void Mechanics::nom(blob * b1, blob * b2) {
 	if (b1->getmass() >= b2->getmass()) {
 		
-		b1->setmass(b1->clamp(0.02, b1->getmass() + 0.01, 1));
+		b1->setmass(b1->clamp(0.08, b1->getmass() + 0.01, 1));
 		b1->setradius((b1->clamp(0.08, b1->getradius() + 0.01, 0.4)));
 		b1->vel->add(b2->vel);
 		b2->pos->scale(-5);
 		
 	}
 	else if (b2->getmass() > b1->getmass()) {
-		b2->setmass(b2->clamp(0.02, b2->getmass() + 0.01, 1));
+		b2->setmass(b2->clamp(0.08, b2->getmass() + 0.01, 1));
 		b2->setradius((b2->clamp(0.008, b2->getradius() + 0.01, 0.4)));
-		b2->vel->add(b2->vel);
-		b2->pos->scale(-5);
+		b2->vel->add(b1->vel);
+		b1->pos->scale(-5);
 	}
 }
 double Mechanics::time() {
@@ -137,11 +136,67 @@ double Mechanics::time() {
 		return t.tv_sec + (t.tv_usec / 1000000.0);
 #endif
 }
-int Mechanics::getscore() {
-	return score;
+
+void Mechanics::borderPatrol(blob * Test) {
+	if (Test->pos->getx() > 1.92) {
+		Test->pos->setx(-1.92);
+		//Test->vel->setx(-1 * Test->vel->getx());
+	}
+	else if (Test->pos->getx() < -1.92) {
+		Test->pos->setx(1.92);
+		//Test->vel->setx(-1 * Test->vel->getx());
+	}
+	if (Test->pos->gety() > 1) {
+		Test->pos->sety(-1);
+		//Test->vel->sety(-1 * Test->vel->gety());
+	}
+	else if (Test->pos->gety() < -1) {
+		Test->pos->sety(1);
+		//Test->vel->sety(-1 * Test->vel->gety());
+	}
 }
-void Mechanics::shufflescore(int num) {
-	score += num;
+void Mechanics::borderPatrol(Rocket * Test) {
+	if (Test->Player->PressedA()) {
+		Test->pos->setx(0);
+		Test->pos->sety(0);
+		Test->vel->setx(0);
+		Test->vel->sety(0);
+	}
+	if (Test->Player->PressedB()) {
+		Test->vel->setx(0);
+		Test->vel->sety(0);
+	}
+	if (Test->pos->getx() > 1.92) {
+		//Test->pos->setx(-1.92);
+		Test->vel->setx(-1 * Test->vel->getx());
+	}
+	else if (Test->pos->getx() < -1.92) {
+		//Test->pos->setx(1.92);
+		Test->vel->setx(-1 * Test->vel->getx());
+	}
+	if (Test->pos->gety() > 1) {
+		//Test->pos->sety(-1);
+		Test->vel->sety(-1 * Test->vel->gety());
+	}
+	else if (Test->pos->gety() < -1) {
+		//Test->pos->sety(1);
+		Test->vel->sety(-1 * Test->vel->gety());
+
+	}
+	if (Test->pew->pos->getx() > 1.92 || Test->pew->pos->getx() < -1.92) {
+		Test->pew->shoot = 0;
+		Test->pew->pos->setx(Test->pos->getx());
+		Test->pew->pos->sety(Test->pos->gety());
+		Test->pew->vel->setx(Test->pos->getx());
+		Test->pew->vel->sety(Test->pos->gety());
+	}
+	if (Test->pew->pos->gety() > 1 || Test->pew->pos->gety() < -1) {
+		Test->pew->shoot = 0;
+		Test->pew->pos->sety(Test->pos->gety());
+		Test->pew->pos->setx(Test->pos->getx());
+		Test->pew->vel->setx(Test->pos->getx());
+		Test->pew->vel->sety(Test->pos->gety());
+	}
 }
 
 
