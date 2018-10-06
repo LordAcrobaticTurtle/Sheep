@@ -32,9 +32,9 @@ void blob::setmass(double fat) {
 void blob::update(double dt) {
 	vel->shuffleX(accel->getx()*dt);
 	vel->shuffleY(accel->gety()*dt);
-
-	vel->setx(clamp(-0.5, vel->getx(), 0.5));
-	vel->sety(clamp(-0.5, vel->gety(), 0.25));
+	double scalef = 1 / mass;
+	vel->setx(clamp(-scalef , vel->getx(), scalef));
+	vel->sety(clamp(-scalef, vel->gety(), scalef));
 
 	pos->shuffleX(vel->getx()*dt);
 	pos->shuffleY(vel->gety()*dt);

@@ -19,7 +19,7 @@ public:
 	//static void shufflescore(int num);
 	static void borderPatrol(blob * Test);
 	static void borderPatrol(Rocket * Test);
-	static void bounce(Rocket * body);	
+	static void bounce(Rocket * p, blob * b);	
 	static void bounce(blob * b1, blob * b2);
 	static void nom(blob * b1, blob * b2);
 	static void AsteroidGrav(blob* Test2, blob* Test3);

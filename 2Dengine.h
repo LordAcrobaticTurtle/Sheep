@@ -18,7 +18,7 @@ public:
 	void shuffleY(double y);
 
 	void add(position * v);
-	static position * subtract(position * a, position * b);
+	static position subtract(position * a, position * b);
 	void scale(double n);
 	void normalise();
 	double mag();

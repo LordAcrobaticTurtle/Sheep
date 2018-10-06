@@ -60,24 +60,13 @@ void Shape::update(double speed, double dt) {
 
 }
 double Shape::clamp(double a, double b, double c) {
-	if (a < c) {
-		if (b < a) {
-			return a;
-		}
-		else if (b > c) {
-			return c;
-		}
+	if (b < a) {
+		return a;
 	}
-	else if (c < a) {
-		if (b < c) {
-			return c;
-		}
-		else if (b > a) {
-			return a;
-		}
+	else if (b > c) {
+		return c;
 	}
-	
-		return b;
+	return b;
 
 }
 void Shape::update(double dt) {

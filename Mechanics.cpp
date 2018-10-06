@@ -27,17 +27,15 @@ void Mechanics::PlayerControls(Rocket * ctrl) {
 }
 
 void Mechanics::AsteroidGrav(blob* Test2, blob* Test3) {
-	position * distance = new position(0,0);
-	distance = position::subtract(Test2->pos, Test3->pos);
+	position distance = position::subtract(Test2->pos, Test3->pos);
 	double magnitude = 0;
-	distance->scale(-1);
-	magnitude = 0.2*Test2->getmass()*Test3->getmass() / distance->mag2();
-	position *force = new position(distance->getx(),distance->gety());
+	distance.scale(-1);
+	magnitude = 0.2*Test2->getmass()*Test3->getmass() / distance.mag2();
+	position *force = new position(distance.getx(),distance.gety());
 	force->scale(magnitude / Test2->getmass());
 	Test2->accel->add(force);
 	
 	delete force;
-	delete distance;
 	
 }
 double Mechanics::scalestickX(GamePad::Coordinate * ptr) {
@@ -50,74 +48,59 @@ double Mechanics::scalestickY(GamePad::Coordinate * ptr) {
 }
 
 double Mechanics::scalerotation(GamePad::Coordinate * ptr) {
-	return (ptr->GetX() / 50000.0);
+	return (ptr->GetX() / 25000.0);
 }
 
 bool Mechanics::Collision(Rocket * player, blob * p) {
-	position * distance = position::subtract(player->pos, p->pos);
-	if (distance->mag2() < (player->radius + p->getradius())*(player->radius + p->getradius())) {
-		delete distance;
+	position distance = position::subtract(player->pos, p->pos);
+	if (distance.mag2() < (player->radius + p->getradius())*(player->radius + p->getradius())) {
 		return true;
 	}
-	delete distance;
 	return false;
 
 }
-void Mechanics::bounce(Rocket * p) {
-	p->vel->scale(-1);
+void Mechanics::bounce(Rocket * p, blob * b2) {
+	position centre = position::subtract(b2->pos, p->pos);
+	double mag = p->vel->mag();
+	p->vel->setx(-mag * cos(centre.angle()));
+	p->vel->sety(-mag * sin(centre.angle()));
+	p->accel->scale(0);
 }
 bool Mechanics::Collision(blob * body1, blob * body2) {
-	position* distance = position::subtract(body1->pos, body2->pos);
+	position distance = position::subtract(body1->pos, body2->pos);
 	
-	if (distance->mag2() < (body1->getradius() + body2->getradius()) * (body1->getradius() + body2->getradius())) {
-		delete distance;
+	if (distance.mag2() < (body1->getradius() + body2->getradius()) * (body1->getradius() + body2->getradius())) {
 		return true;
 	}
-	delete distance;
 	return false;
 }
 bool Mechanics::Collision(blob * body, lazor * pew) {
-	position * distance = position::subtract(body->pos, pew->pos);
+	position distance = position::subtract(body->pos, pew->pos);
 	if (pew->shoot == 1) {
-		if (distance->mag2() < (body->getradius() + 0.01) * (body->getradius() + 0.01)) {
+		if (distance.mag2() < (body->getradius() + 0.01) * (body->getradius() + 0.01)) {
 			pew->shoot = 0;
-			delete distance;
 			return true;
 		}
 	}
-	delete distance;
 	return false;
 
 }
 void Mechanics::Destroy(blob * body) {
 	body->setmass(body->clamp(0.02,body->getmass()-0.02,1));
-	body->setradius((body->clamp(0.008, body->getradius()-0.02, 0.4)));
+	body->setradius((body->clamp(0.02, body->getradius()-0.02, 0.4)));
 }
 void Mechanics::bounce(blob * b1, blob * b2) {
-	position * centre = position::subtract(b2->pos, b1->pos);
-	centre->normalise();
-	double mag = b2->vel->mag();
-	b2->accel->scale(0);
-	b2->vel->sety(centre->gety());
-	b2->vel->setx(centre->getx());
-	b2->vel->scale(mag);
-	delete centre;
+	position centre = position::subtract(b2->pos, b1->pos);
+	double mag = b1->vel->mag();
+	b1->vel->setx(-mag*cos(centre.angle()));
+	b1->vel->sety(-mag*sin(centre.angle()));
+	b1->accel->scale(0);
+	
 }
-void Mechanics::nom(blob * b1, blob * b2) {
-	if (b1->getmass() >= b2->getmass()) {
-		
-		b1->setmass(b1->clamp(0.08, b1->getmass() + 0.01, 1));
-		b1->setradius((b1->clamp(0.08, b1->getradius() + 0.01, 0.4)));
-		b1->vel->add(b2->vel);
-		b2->pos->scale(-5);
-		
-	}
-	else if (b2->getmass() > b1->getmass()) {
-		b2->setmass(b2->clamp(0.08, b2->getmass() + 0.01, 1));
-		b2->setradius((b2->clamp(0.008, b2->getradius() + 0.01, 0.4)));
-		b2->vel->add(b1->vel);
-		b1->pos->scale(-5);
-	}
+void Mechanics::nom(blob * gain, blob * loss) {
+	gain->setmass(0.5*loss->getmass()+0.01);
+	loss->setmass(loss->getmass()-0.01);
+
 }
 double Mechanics::time() {
 #if defined(WIN32)
@@ -167,20 +150,20 @@ void Mechanics::borderPatrol(Rocket * Test) {
 		Test->vel->sety(0);
 	}
 	if (Test->pos->getx() > 1.92) {
-		//Test->pos->setx(-1.92);
-		Test->vel->setx(-1 * Test->vel->getx());
+		Test->pos->setx(-1.92);
+		//Test->vel->setx(-1 * Test->vel->getx());
 	}
 	else if (Test->pos->getx() < -1.92) {
-		//Test->pos->setx(1.92);
-		Test->vel->setx(-1 * Test->vel->getx());
+		Test->pos->setx(1.92);
+		//Test->vel->setx(-1 * Test->vel->getx());
 	}
 	if (Test->pos->gety() > 1) {
-		//Test->pos->sety(-1);
-		Test->vel->sety(-1 * Test->vel->gety());
+		Test->pos->sety(-1);
+		//Test->vel->sety(-1 * Test->vel->gety());
 	}
 	else if (Test->pos->gety() < -1) {
-		//Test->pos->sety(1);
-		Test->vel->sety(-1 * Test->vel->gety());
+		Test->pos->sety(1);
+		//Test->vel->sety(-1 * Test->vel->gety());
 
 	}
 	if (Test->pew->pos->getx() > 1.92 || Test->pew->pos->getx() < -1.92) {

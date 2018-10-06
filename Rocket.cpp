@@ -43,7 +43,7 @@ void Rocket::draw() {
 	glPushMatrix();
 	glMove();
 	glPushMatrix();
-	glColor3d(1, 0, 1);
+	glColor3d(1, 1, 1);
 	glBegin(GL_QUADS);
 	glVertex2d(-0.03, 0.03);
 	glVertex2d(-0.03, -0.03);
@@ -51,12 +51,14 @@ void Rocket::draw() {
 	glVertex2d(0.03, 0.03);
 	glEnd();
 	// NOSECONE
+	glColor3d(1, 0, 0);
 	glBegin(GL_TRIANGLES);
 	glVertex2d(0.03,0.03);
 	glVertex2d(0.03, -0.03);
 	glVertex2d(0.07, 0);
 	
 	//FINS
+	glColor3d(1, 0, 0);
 	glVertex2d(-0.03, 0.03);
 	glVertex2d(0, 0.03);
 	glVertex2d(-0.035, 0.04);

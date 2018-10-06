@@ -24,11 +24,14 @@ void HUD::DeathMessage(int Hp) {
 }
 
 void HUD::PrintScore(int num) {
+	int hundreds = 0;
 	int tens = 0;
 	int ones = 0;
-	
-	tens = num / 10;
 	ones = num % 10;
+	num = num / 10;
+	tens = num % 10;
+	num = num / 10;
+	hundreds = num % 10;
 	
 	glPushMatrix();
 	glColor3d(1, 1, 1);
@@ -40,5 +43,11 @@ void HUD::PrintScore(int num) {
 	glColor3d(1, 1, 1);
 	glRasterPos2d(-0.45,-1);
 	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ones + 48);
+	glPopMatrix();
+	
+	glPushMatrix();
+	glColor3d(1, 1, 1);
+	glRasterPos2d(-0.55, -1);
+	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, hundreds + 48);
 	glPopMatrix();
 }
