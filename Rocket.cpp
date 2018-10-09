@@ -1,7 +1,8 @@
 #include "Rocket.h"
+
 Rocket::Rocket() {
 	Player = new GamePad::XBoxController(&ptr, PlayedID);
-	radius = 0.05;
+	radius = 0.07;
 	
 }
 Rocket::Rocket(int PID) {
@@ -12,6 +13,8 @@ Rocket::Rocket(int PID) {
 	pew->pos->setx(0);
 	pew->pos->sety(0);
 	health = 3;
+	shield = new blob(0.5, radius);
+	shield->setcolour(0, 0.5, 1);
 }
 
 
@@ -25,6 +28,17 @@ void Rocket::update(double dt) {
 
 	pos->shuffleX(vel->getx()*dt);
 	pos->shuffleY(vel->gety()*dt);
+
+	shield->pos->setx(pos->getx());
+	shield->pos->sety(pos->gety());
+
+	if (pew->shoot != 1) {
+		pew->vel->setx(1.2*cos(getrotation()*PI / 180));
+		pew->vel->sety(1.2*sin(getrotation()*PI / 180));
+		pew->pos->setx(pos->getx());
+		pew->pos->sety(pos->gety());
+	}
+
 	if (rotation > 360) rotation = 0;
 	if (rotation < -360) rotation = 0;
 	if (pew->shoot == 1) {
@@ -40,6 +54,9 @@ void Rocket::setHeatlh(double hp) {
 	health = hp;
 }
 void Rocket::draw() {
+	if (Player->PressedA()) {
+		shield->draw();
+	}
 	glPushMatrix();
 	glMove();
 	glPushMatrix();

@@ -8,6 +8,13 @@ blob::blob(double m, double r) {
 	rgb[2] = 0;
 
 }
+blob::blob(double m, double r, double x, double y) {
+	this->mass = m;
+	this->radius = r;
+	pos->setx(x);
+	pos->sety(y);
+	setcolour(0.5, 0.5, 0.5);
+}
 /*
 blob::blob() {
 	mass = 1;

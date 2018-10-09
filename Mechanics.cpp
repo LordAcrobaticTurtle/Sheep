@@ -6,26 +6,33 @@ Mechanics::Mechanics() {
 //	score = 0;
 }
 void Mechanics::PlayerControls(Rocket * ctrl) {
-	XInputGetState(0, ctrl->Player->GetState());
 	ctrl->Player->SetDeadzone(5000);
-	GamePad::Coordinate * LThumb = &ctrl->Player->LeftThumbLocation();
-	GamePad::Coordinate * RThumb = &ctrl->Player->RightThumbLocation();
-	if (ctrl->Player->PressedY()) {
-		getchar();
-	}
+	GamePad::Coordinate LThumb(0, 0);
+	GamePad::Coordinate RThumb(0, 0);
+	LThumb = ctrl->Player->LeftThumbLocation();
+	RThumb = ctrl->Player->RightThumbLocation();
 	ctrl->accel->setx(scalestickX(LThumb));
 	ctrl->accel->sety(scalestickY(LThumb));
+
 	ctrl->shuffleRotation(-scalerotation(RThumb));
 	if (ctrl->Player->PressedLeftShoulder()) {
 		ctrl->pew->shoot = 1;
-	} 
+	}
 	if (ctrl->Player->PressedRightShoulder()) {
 		ctrl->pew->shoot = 0;
 		ctrl->pew->pos->setx(ctrl->pos->getx());
 		ctrl->pew->pos->sety(ctrl->pos->gety());
 	}
-}
+	if (ctrl->Player->PressedA()) {
+		ctrl->shield->setmass(-10);
+		ctrl->pew->shoot = 0;
+	}
+	if (!ctrl->Player->PressedA()) {
+		ctrl->shield->setmass(0.3);
+		
+	}
 
+}
 void Mechanics::AsteroidGrav(blob* Test2, blob* Test3) {
 	position distance = position::subtract(Test2->pos, Test3->pos);
 	double magnitude = 0;
@@ -38,17 +45,29 @@ void Mechanics::AsteroidGrav(blob* Test2, blob* Test3) {
 	delete force;
 	
 }
-double Mechanics::scalestickX(GamePad::Coordinate * ptr) {
-	return (ptr->GetX() / 15000.0);
+void Mechanics::AsteroidGrav(blob * ass, Rocket * p) {
+	position distance = position::subtract(ass->pos, p->pos);
+	double magnitude = 0;
+	//distance.scale(-1);
+	magnitude = 0.2*ass->getmass()*p->shield->getmass() / distance.mag2();
+	position *force = new position(distance.getx(), distance.gety());
+	force->scale(magnitude / abs(p->shield->getmass()));
+	p->accel->add(force);
+	force->scale(-1*abs(p->shield->getmass()) / ass->getmass());
+	ass->accel->add(force);
+	delete force;
+}
+double Mechanics::scalestickX(GamePad::Coordinate ptr) {
+	return (ptr.GetX() / 14000.0);
 
 }
 
-double Mechanics::scalestickY(GamePad::Coordinate * ptr) {
-	return (ptr->GetY() / 15000.0);
+double Mechanics::scalestickY(GamePad::Coordinate ptr) {
+	return (ptr.GetY() / 14000.0);
 }
 
-double Mechanics::scalerotation(GamePad::Coordinate * ptr) {
-	return (ptr->GetX() / 25000.0);
+double Mechanics::scalerotation(GamePad::Coordinate ptr) {
+	return (ptr.GetX() / 20000.0);
 }
 
 bool Mechanics::Collision(Rocket * player, blob * p) {
@@ -86,7 +105,7 @@ bool Mechanics::Collision(blob * body, lazor * pew) {
 
 }
 void Mechanics::Destroy(blob * body) {
-	body->setmass(body->clamp(0.02,body->getmass()-0.02,1));
+	body->setmass(body->clamp(0.2,body->getmass()-0.02,1));
 	body->setradius((body->clamp(0.02, body->getradius()-0.02, 0.4)));
 }
 void Mechanics::bounce(blob * b1, blob * b2) {
@@ -139,12 +158,6 @@ void Mechanics::borderPatrol(blob * Test) {
 	}
 }
 void Mechanics::borderPatrol(Rocket * Test) {
-	if (Test->Player->PressedA()) {
-		Test->pos->setx(0);
-		Test->pos->sety(0);
-		Test->vel->setx(0);
-		Test->vel->sety(0);
-	}
 	if (Test->Player->PressedB()) {
 		Test->vel->setx(0);
 		Test->vel->sety(0);

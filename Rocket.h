@@ -9,6 +9,10 @@
 #include "XInputWrapper.h"
 #include <Xinput.h>
 #include "Lazor.h"
+#include "Body.h"
+
+#define PI 3.1415926535
+
 
 class Rocket : public Shape {
 private:
@@ -18,6 +22,7 @@ protected:
 	int PlayedID;
 public:
 	lazor * pew;
+	blob * shield;
 	double radius;
 	Rocket();
 	Rocket(int hp);

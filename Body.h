@@ -14,6 +14,7 @@ protected:
 public:
 	blob() = default;
 	blob(double m, double r);
+	blob(double m, double r, double x, double y);
 	void draw();
 	void update(double dt);
 	double getmass();

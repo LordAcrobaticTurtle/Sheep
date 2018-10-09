@@ -23,11 +23,12 @@ public:
 	static void bounce(blob * b1, blob * b2);
 	static void nom(blob * b1, blob * b2);
 	static void AsteroidGrav(blob* Test2, blob* Test3);
+	static void AsteroidGrav(blob * b, Rocket * p);
 	static void Destroy(blob * b);
 	static void PlayerControls(Rocket * ship);
-	static double scalestickX(GamePad::Coordinate * ptr);
-	static double scalestickY(GamePad::Coordinate * ptr);
-	static double scalerotation(GamePad::Coordinate * ptr);
+	static double scalestickX(GamePad::Coordinate ptr);
+	static double scalestickY(GamePad::Coordinate ptr);
+	static double scalerotation(GamePad::Coordinate ptr);
 	
 	
 };
