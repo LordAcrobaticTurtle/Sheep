@@ -13,7 +13,7 @@ Rocket::Rocket(int PID) {
 	pew->pos->setx(0);
 	pew->pos->sety(0);
 	health = 3;
-	shield = new blob(0.5, radius);
+	shield = new blob(0.5, 0.071);
 	shield->setcolour(0, 0.5, 1);
 }
 
@@ -53,29 +53,53 @@ int Rocket::getHealth() {
 void Rocket::setHeatlh(double hp) {
 	health = hp;
 }
+int Rocket::getscore() {
+	return score;
+}
+void Rocket::addscore(double num) {
+	score += num;
+}
+int Rocket::getID() {
+	return PlayedID;
+}
 void Rocket::draw() {
+	// Player shield 
 	if (Player->PressedA()) {
+		glPushMatrix();
+		glTranslated(0.015*cos(rotation*PI/180), 0.015*sin(rotation*PI/180), 0);
 		shield->draw();
+		glPopMatrix();
 	}
 	glPushMatrix();
 	glMove();
 	glPushMatrix();
 	glColor3d(1, 1, 1);
+	// BODY
 	glBegin(GL_QUADS);
 	glVertex2d(-0.03, 0.03);
 	glVertex2d(-0.03, -0.03);
 	glVertex2d(0.03,-0.03);
 	glVertex2d(0.03, 0.03);
 	glEnd();
+	if (PlayedID == 1) {
+		glColor3d(1, 0, 0);
+	}
+	else if (PlayedID == 2) {
+		glColor3d(0, 1, 0);
+	}
+	else if (PlayedID == 3) {
+		glColor3d(0, 0, 1);
+	}
+	else if (PlayedID == 4) {
+		glColor3d(1, 0, 1);
+	}
 	// NOSECONE
-	glColor3d(1, 0, 0);
 	glBegin(GL_TRIANGLES);
 	glVertex2d(0.03,0.03);
 	glVertex2d(0.03, -0.03);
 	glVertex2d(0.07, 0);
 	
 	//FINS
-	glColor3d(1, 0, 0);
 	glVertex2d(-0.03, 0.03);
 	glVertex2d(0, 0.03);
 	glVertex2d(-0.035, 0.04);

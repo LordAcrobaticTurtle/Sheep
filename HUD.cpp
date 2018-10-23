@@ -23,11 +23,31 @@ void HUD::DeathMessage(int Hp) {
 	}
 }
 
-void HUD::PrintScore(int num) {
+void HUD::PrintScore(Rocket * r) {
+	position initial_position;
+
+	if (r->getID() == 1) {
+		initial_position.setx(-0.55);
+		initial_position.sety(-1);
+	}
+	else if (r->getID() == 2) {
+		initial_position.setx(-0.55);
+		initial_position.sety(0.9);
+	}
+	else if (r->getID() == 3) {
+		initial_position.setx(0.55);
+		initial_position.sety(-1);
+	}
+	else if (r->getID() == 4) {
+		initial_position.setx(0.55);
+		initial_position.sety(0.9);
+	}
+
+	int num = r->getscore();
 	if (num < 0) {
 		glPushMatrix();
 		glColor3d(1, 1, 1);
-		glRasterPos2d(-0.6, -1);
+		glRasterPos2d(initial_position.getx()-0.05, initial_position.gety());
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, 45);
 		glPopMatrix();
 		num = num * -1;
@@ -40,22 +60,16 @@ void HUD::PrintScore(int num) {
 	tens = num % 10;
 	num = num / 10;
 	hundreds = num % 10;
+	int score[3] = {hundreds, tens, ones};
+	
 	// hundreds column
 	glPushMatrix();
 	glColor3d(1, 1, 1);
-	glRasterPos2d(-0.55, -1);
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, hundreds + 48);
-	glPopMatrix();
-	// Tens column
-	glPushMatrix();
-	glColor3d(1, 1, 1);
-	glRasterPos2d(-0.5,-1);
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, tens + 48);
-	glPopMatrix();
-	// ones column
-	glPushMatrix();
-	glColor3d(1, 1, 1);
-	glRasterPos2d(-0.45,-1);
-	glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, ones + 48);
+	for (unsigned int i = 0; i < 3; i++) {
+		glRasterPos2d(initial_position.getx(),initial_position.gety());
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, score[i] + 48);
+		initial_position.shuffleX(0.05);
+	}
+	
 	glPopMatrix();
 }

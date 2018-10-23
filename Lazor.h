@@ -10,7 +10,7 @@ class lazor : public Shape {
 public:
 	lazor();
 	void update(double dt);
-	double maxV = 2.5;
+	double maxV = 3;
 	int shoot;
 	void draw();
 };

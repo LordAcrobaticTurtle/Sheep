@@ -20,10 +20,14 @@ private:
 protected:
 	int health;
 	int PlayedID;
+	int score;
 public:
 	lazor * pew;
 	blob * shield;
 	double radius;
+	int getscore();
+	int getID();
+	void addscore(double num);
 	Rocket();
 	Rocket(int hp);
 	void update(double dt);

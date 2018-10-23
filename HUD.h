@@ -8,6 +8,6 @@ class HUD {
 public:
 	static void PrintHealth(int Health);
 	static void DeathMessage(int hp);
-	static void PrintScore(int num);
+	static void PrintScore(Rocket * r);
 
 };

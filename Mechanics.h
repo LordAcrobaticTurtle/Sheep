@@ -8,7 +8,7 @@
 #include "Body.h"
 class Mechanics {
 private:
-	//int score;
+	//static int score;
 public:
 	Mechanics();
 	static bool Collision(blob *s, blob *p);

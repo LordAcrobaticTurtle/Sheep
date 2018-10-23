@@ -48,11 +48,12 @@ void Mechanics::AsteroidGrav(blob* Test2, blob* Test3) {
 void Mechanics::AsteroidGrav(blob * ass, Rocket * p) {
 	position distance = position::subtract(ass->pos, p->pos);
 	double magnitude = 0;
-	//distance.scale(-1);
 	magnitude = 0.2*ass->getmass()*p->shield->getmass() / distance.mag2();
 	position *force = new position(distance.getx(), distance.gety());
 	force->scale(magnitude / abs(p->shield->getmass()));
-	p->accel->add(force);
+	if (p->shield->getmass() > 0) {
+		p->accel->add(force);
+	}
 	force->scale(-1*abs(p->shield->getmass()) / ass->getmass());
 	ass->accel->add(force);
 	delete force;
